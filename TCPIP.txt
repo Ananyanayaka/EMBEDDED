@@ -1,0 +1,78 @@
+
+✅ 1. TCP/IP Protocol Suite
+The TCP/IP stack has 4 layers (sometimes mapped to the 7-layer OSI model):
+
+Layer	Protocols/Functions
+Application	HTTP, HTTPS, DNS, FTP
+Transport	TCP, UDP
+Internet	IP (IPv4/IPv6), ICMP
+Network Access	Ethernet, Wi-Fi, PPP
+
+🔑 Key Concepts:
+TCP (Transmission Control Protocol): Reliable, connection-oriented. Used in HTTP, HTTPS, SSH.
+
+UDP (User Datagram Protocol): Faster, connectionless. Used in DNS, VoIP.
+
+IP: Provides addressing (IPv4/IPv6) and routing.
+
+
+
+
+
+
+
+
+
+COPY AND PASTE THIS IN  https://www.plantuml.com/
+
+
+
+
+@startuml
+title TCP/IP Protocol Stack - HTTP Request Flow
+
+participant "Application Layer\n(HTTP)" as App
+participant "Transport Layer\n(TCP)" as TCP
+participant "Internet Layer\n(IP)" as IP
+participant "Network Access Layer\n(Ethernet/Wi-Fi)" as Net
+participant "Physical Medium\n(Cables/Wireless)" as Phys
+
+App -> TCP : Send HTTP Request (e.g. GET /index.html)
+note right of App
+Application data is passed to TCP
+for reliable transport.
+end note
+
+TCP -> IP : Encapsulate in TCP Segment
+note right of TCP
+TCP adds headers: port numbers, sequence,
+ack numbers, etc.
+end note
+
+IP -> Net : Add IP Header
+note right of IP
+IP handles source/destination IPs and
+routing logic.
+end note
+
+Net -> Phys : Frame + Transmit Bits
+note right of Net
+Network interface adds MAC addresses, CRC, etc.
+Transmits via Ethernet/Wi-Fi.
+end note
+
+Phys -> Phys : Physical transmission
+note right of Phys
+Bits are transmitted over copper, fiber, or air.
+end note
+
+Phys -> Net : Receive Bits
+Net -> IP : Extract IP Packet
+IP -> TCP : Extract TCP Segment
+TCP -> App : Deliver HTTP Request
+
+note right of App
+Remote server receives the HTTP request.
+Process continues in reverse for response.
+end note
+@enduml
